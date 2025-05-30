@@ -18,10 +18,11 @@ int32_t main() {
     cin.tie(nullptr);
     cout.tie(nullptr);
 
-    vector<int> arr ={1,1,2,2,3,4};
-    set<int> sett(arr.begin(), arr.end());
-
-    int size = sett.size();
+    int t = 1;
+    cin >> t;
+    while (t--) {
+        solveProblem();
+    }
 
     return 0;
 }
