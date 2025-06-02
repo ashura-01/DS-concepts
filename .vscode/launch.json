@@ -7,9 +7,9 @@
       "request": "launch",
       "args": [],
       "stopAtEntry": false,
-      "externalConsole": false,
-      "cwd": "/home/ashura/Programming",
-      "program": "/home/ashura/Programming/build/Debug/outDebug",
+      "externalConsole": true,
+      "cwd": "e:/programming/DS-concepts",
+      "program": "e:/programming/DS-concepts/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [
