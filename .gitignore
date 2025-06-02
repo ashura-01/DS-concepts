@@ -1,20 +1,30 @@
-# Ignore .cph folder (maybe your custom folder)
+# Custom folders (e.g., virtual environments, temp data)
 .cph/
-
-# Ignore .vev folder (virtual environment or similar)
 .vev/
 
-# Ignore VS Code settings folder
+# VS Code settings
 .vscode/
 
-# Also, common Linux and build ignores (optional but recommended)
-
-# Linux system files
+# OS/system/editor files
 *~
 *.swp
 .DS_Store
+Thumbs.db  # Windows system file
 
-# Build files (optional for C++ projects)
-*.o
-*.out
-*.exe
+# C++ compiled files and build artifacts
+*.o        # Object files
+*.out      # Executables (Linux)
+*.exe      # Executables (Windows)
+*.obj      # Object files (Windows)
+*.dll      # Dynamic link libraries (Windows)
+*.pdb      # Debugging symbols (Windows)
+a.out      # Default GCC output
+
+# Optional: Ignore any build folder
+build/
+bin/
+dist/
+
+# Uncomment below if you want to keep the folder structure
+# !build/.gitkeep
+# !bin/.gitkeep
