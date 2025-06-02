@@ -1,0 +1,20 @@
+# Ignore .cph folder (maybe your custom folder)
+.cph/
+
+# Ignore .vev folder (virtual environment or similar)
+.vev/
+
+# Ignore VS Code settings folder
+.vscode/
+
+# Also, common Linux and build ignores (optional but recommended)
+
+# Linux system files
+*~
+*.swp
+.DS_Store
+
+# Build files (optional for C++ projects)
+*.o
+*.out
+*.exe
