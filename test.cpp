@@ -11,6 +11,7 @@ const int INF = LLONG_MAX;
 
 void solveProblem() {
     // Your problem-solving code here
+    cout<<"hello"<<endl;
 }
 
 int32_t main() {
