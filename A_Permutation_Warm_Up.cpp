@@ -9,11 +9,22 @@ using namespace std;
 const int MOD = 1e9 + 7;
 const int INF = LLONG_MAX;
 
-
+void solveProblem() {
+    int x;
+    cin>>x;
+    
+}
 
 int32_t main() {
-    
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+    cout.tie(nullptr);
 
-    
+    int t = 1;
+    cin >> t;
+    while (t--) {
+        solveProblem();
+    }
+
     return 0;
 }
