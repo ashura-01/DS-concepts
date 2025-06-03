@@ -20,7 +20,7 @@ void solveProblem()
         for (int b = 0; b <= 100; ++b) {
             int sum = a + b;
             if (sum * sum == num) {
-                cout << a << " " << b << endl;
+                cout << a << " " << b << endl; 
                 return;
             }
         }
