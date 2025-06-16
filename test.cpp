@@ -9,13 +9,18 @@ using namespace std;
 const int MOD = 1e9 + 7;
 const int INF = LLONG_MAX;
 
-void solveProblem()
+void solveProblem(int a, int b)
 {
-    // Your problem-solving code here
+    cout << "the mod is: " << a % b << endl;
 }
 
 int32_t main()
 {
-    cout << 5 / 2 << endl;
+    int a, b;
+    cout << "enter the first number: ";
+    cin >> a;
+    cout << "enter the second number: ";
+    cin >> b;
+    solveProblem(a, b);
     return 0;
 }
