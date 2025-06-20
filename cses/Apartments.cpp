@@ -72,3 +72,29 @@ int32_t main()
 
     return 0;
 }
+
+
+
+// Input:
+
+// makefile
+// Copy
+// Edit
+// n = 4, m = 3, k = 5  
+// Desires:     60 45 80 60  
+// Apartments:  30 60 75
+// Sorted:
+
+// makefile
+// Copy
+// Edit
+// Desires:     45 60 60 80  
+// Apartments:  30 60 75
+// Try matching:
+// 45 & 30 → ❌ 30 too small
+// 45 & 60 → ❌ 60 too big
+// 60 & 60 → ✅ match → count = 1
+// 60 & 75 → ❌ too big
+// 80 & 75 → ✅ match → count = 2
+
+// ✅ Answer = 2
