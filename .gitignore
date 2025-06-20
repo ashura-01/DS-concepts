@@ -1,6 +1,7 @@
 # Custom folders (e.g., virtual environments, temp data)
 .cph/
 .vev/
+output/
 
 # VS Code settings
 .vscode/
