@@ -11,7 +11,7 @@ using namespace std;
 const int MOD = 1e9 + 7;
 const int INF = LLONG_MAX;
 
-void solveProblem()
+void solveProblemTLE()
 {
     int n;
     cin >> n;
@@ -44,6 +44,34 @@ void solveProblem()
     }
 
     cout << sum << endl;
+}
+
+void solveProblem()
+{
+    int n;
+    cin >> n;
+
+    map<int, int> mp;
+
+    for (int i = 0; i < n; i++)
+    {
+        int key1, key2;
+        cin >> key1 >> key2;
+
+        mp[key1]++;
+        mp[key2]--;
+    }
+
+    int prefixSum = 0;
+    int result = 0;
+
+    for (auto values : mp)
+    {
+        prefixSum += values.second;
+        result = (result > prefixSum) ? result : prefixSum;
+    }
+
+    cout << result << endl;
 }
 
 int32_t main()
