@@ -16,27 +16,23 @@ void solveProblem()
     // Your problem-solving code here
     int n;
     cin >> n;
-    vector<pair<int, int>> arr(n);
+    vector<int> arr(n);
+    for (auto &elem : arr)
+        cin >> elem;
 
-    for (int i = 0; i < n; i++)
-        cin >> arr[i].first >> arr[i].second;
+    sort(all(arr));
+    int median = arr[n / 2];
 
-    sort(all(arr), [](auto &x, auto &y)
-         { return x.second < y.second; });
-
-    int count = 0, current_end = 0;
+    int cost = 0;
+    int sum = 0;
 
     for (auto elem : arr)
     {
-        if (elem.first >= current_end)
-        {
-            count++;
-
-            current_end = elem.second;
-        }
+        cost = abs(elem - median);
+        sum += cost;
     }
 
-    cout << count << endl;
+    cout << sum << endl;
 }
 
 int32_t main()
@@ -46,7 +42,7 @@ int32_t main()
     cout.tie(nullptr);
 
     int t = 1;
-   // cin >> t;
+    // cin >> t;
     while (t--)
     {
         solveProblem();

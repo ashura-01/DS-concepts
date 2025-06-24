@@ -14,29 +14,29 @@ const int INF = LLONG_MAX;
 void solveProblem()
 {
     // Your problem-solving code here
-    int n;
-    cin >> n;
-    vector<pair<int, int>> arr(n);
+    int n, x;
+    cin >> n >> x;
 
-    for (int i = 0; i < n; i++)
-        cin >> arr[i].first >> arr[i].second;
+    map<int, int> mp;
 
-    sort(all(arr), [](auto &x, auto &y)
-         { return x.second < y.second; });
-
-    int count = 0, current_end = 0;
-
-    for (auto elem : arr)
+    for (size_t i = 1; i <= n; i++)
     {
-        if (elem.first >= current_end)
-        {
-            count++;
+        int elem;
+        cin >> elem;
 
-            current_end = elem.second;
+        int det = x - elem;
+
+        if (mp.count(det))
+        {
+            cout << mp[det] << " " << i << endl;
+            return;
+        }
+        else
+        {
+            mp[elem] = i;
         }
     }
-
-    cout << count << endl;
+    cout << "IMPOSSIBLE" << endl;
 }
 
 int32_t main()
@@ -46,7 +46,7 @@ int32_t main()
     cout.tie(nullptr);
 
     int t = 1;
-   // cin >> t;
+    // cin >> t;
     while (t--)
     {
         solveProblem();

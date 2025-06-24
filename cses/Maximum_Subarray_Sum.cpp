@@ -16,27 +16,22 @@ void solveProblem()
     // Your problem-solving code here
     int n;
     cin >> n;
-    vector<pair<int, int>> arr(n);
+    vector<int> arr(n);
+    for (auto &elem : arr)
+        cin >> elem;
 
-    for (int i = 0; i < n; i++)
-        cin >> arr[i].first >> arr[i].second;
+    int current = arr[0];
+    int maxm = arr[0];
 
-    sort(all(arr), [](auto &x, auto &y)
-         { return x.second < y.second; });
-
-    int count = 0, current_end = 0;
-
-    for (auto elem : arr)
+    for (int i = 1; i < n; i++)
     {
-        if (elem.first >= current_end)
-        {
-            count++;
+        int sum = current + arr[i];
 
-            current_end = elem.second;
-        }
+        current = max(arr[i], sum);
+        maxm = max(current, maxm);
     }
 
-    cout << count << endl;
+    cout << maxm << endl;
 }
 
 int32_t main()
@@ -46,7 +41,7 @@ int32_t main()
     cout.tie(nullptr);
 
     int t = 1;
-   // cin >> t;
+    //cin >> t;
     while (t--)
     {
         solveProblem();
