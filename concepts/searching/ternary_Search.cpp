@@ -5,6 +5,8 @@ using namespace std;
 #define endl '\n'
 #define pb push_back
 #define all(x) (x).begin(), (x).end()
+#define yes cout << "YES" << endl
+#define no cout << "NO" << endl
 
 const int MOD = 1e9 + 7;
 const int INF = LLONG_MAX;
@@ -32,32 +34,37 @@ void print(const vector<int> &arr)
     cout << "-\n";
 }
 
-int binarySearch(vector<int> &arr, int target)
+int ternarySearch(vector<int> arr, int target)
 {
-    int left = 0;
-    int right = arr.size() - 1;
+    int low = 0, high = arr.size() - 1;
 
-    while (left <= right)
+    while (low <= high)
     {
-        int mid = left + (right - left) / 2;
+        int mid1 = low + (high - low) / 3;
+        int mid2 = high - (high - low) / 3;
 
-        if (arr[mid] == target)
+        if (arr[mid1] == target)
+            return mid1;
+        if (arr[mid2] == target)
+            return mid2;
+
+        if (target < arr[mid1])
         {
-            return mid;
+            high = mid1 - 1;
         }
-        else if (arr[mid] < target)
+        else if (target > arr[mid2])
         {
-            left = mid + 1;
+            low = mid2 + 1;
         }
         else
         {
-            right = mid - 1;
+            low = mid1 + 1;
+            high = mid2 - 1;
         }
     }
 
-    return -1;
+    return -1; // Target not found
 }
-
 
 int32_t main()
 {
@@ -70,7 +77,7 @@ int32_t main()
 
     int target = 10;
 
-    int index = binarySearch(arr, target);
+    int index = ternarySearch(arr, target);
 
     cout << "the target: " << arr[index] << "---->" << index << endl;
 

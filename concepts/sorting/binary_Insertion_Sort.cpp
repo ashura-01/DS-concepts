@@ -5,6 +5,8 @@ using namespace std;
 #define endl '\n'
 #define pb push_back
 #define all(x) (x).begin(), (x).end()
+#define yes cout << "YES" << endl
+#define no cout << "NO" << endl
 
 const int MOD = 1e9 + 7;
 const int INF = LLONG_MAX;
@@ -32,32 +34,40 @@ void print(const vector<int> &arr)
     cout << "-\n";
 }
 
-int binarySearch(vector<int> &arr, int target)
+int binarySearch(vector<int> &arr, int target, int low, int high)
 {
-    int left = 0;
-    int right = arr.size() - 1;
-
-    while (left <= right)
+    while (low <= high)
     {
-        int mid = left + (right - left) / 2;
-
-        if (arr[mid] == target)
-        {
-            return mid;
-        }
-        else if (arr[mid] < target)
-        {
-            left = mid + 1;
-        }
+        int mid = (low + high) / 2;
+        if (target == arr[mid])
+            return mid + 1;
+        else if (target > arr[mid])
+            low = mid + 1;
         else
-        {
-            right = mid - 1;
-        }
+            high = mid - 1;
     }
-
-    return -1;
+    return low;
 }
 
+void binaryInsertionSort(vector<int> &arr)
+{
+    int n = arr.size();
+
+    for (int i = 1; i < n; i++)
+    {
+        int key = arr[i];
+        int j = i - 1;
+
+        int indx = binarySearch(arr, key, 0, j);
+
+        while (j >= indx)
+        {
+            arr[j + 1] = arr[j];
+            j--;
+        }
+        arr[indx] = key;
+    }
+}
 
 int32_t main()
 {
@@ -65,14 +75,13 @@ int32_t main()
     cin.tie(nullptr);
     cout.tie(nullptr);
 
-    vector<int> arr = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15};
+    vector<int> arr = {0, 9, 8, 7, 6, 5, 4, 3, 2, 1};
+
     print(arr);
 
-    int target = 10;
+    binaryInsertionSort(arr);
 
-    int index = binarySearch(arr, target);
-
-    cout << "the target: " << arr[index] << "---->" << index << endl;
+    print(arr);
 
     return 0;
 }

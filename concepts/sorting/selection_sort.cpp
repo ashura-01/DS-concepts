@@ -5,6 +5,8 @@ using namespace std;
 #define endl '\n'
 #define pb push_back
 #define all(x) (x).begin(), (x).end()
+#define yes cout << "YES" << endl
+#define no cout << "NO" << endl
 
 const int MOD = 1e9 + 7;
 const int INF = LLONG_MAX;
@@ -32,32 +34,24 @@ void print(const vector<int> &arr)
     cout << "-\n";
 }
 
-int binarySearch(vector<int> &arr, int target)
+void seclectionSort(vector<int> &arr)
 {
-    int left = 0;
-    int right = arr.size() - 1;
+    int n = arr.size();
 
-    while (left <= right)
+    for (int i = 0; i < n - 1; i++)
     {
-        int mid = left + (right - left) / 2;
+        int mindex = i;
+        for (int j = i + 1; j < n; j++)
+        {
+            if (arr[j] < arr[mindex])
+            {
+                mindex = j;
+            }
+        }
 
-        if (arr[mid] == target)
-        {
-            return mid;
-        }
-        else if (arr[mid] < target)
-        {
-            left = mid + 1;
-        }
-        else
-        {
-            right = mid - 1;
-        }
+        swap(arr[i], arr[mindex]);
     }
-
-    return -1;
 }
-
 
 int32_t main()
 {
@@ -65,14 +59,13 @@ int32_t main()
     cin.tie(nullptr);
     cout.tie(nullptr);
 
-    vector<int> arr = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15};
+    vector<int> arr = {0, 9, 8, 7, 6, 5, 4, 3, 2, 1};
+
     print(arr);
 
-    int target = 10;
+    seclectionSort(arr);
 
-    int index = binarySearch(arr, target);
-
-    cout << "the target: " << arr[index] << "---->" << index << endl;
+    print(arr);
 
     return 0;
 }
