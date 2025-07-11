@@ -63,7 +63,7 @@ int ternarySearch(vector<int> arr, int target)
         }
     }
 
-    return -1; // Target not found
+    return -1; 
 }
 
 int32_t main()
