@@ -32,6 +32,7 @@ void print(const vector<int> &arr)
     cout << "-\n";
 }
 
+
 int binarySearch(vector<int> &arr, int target)
 {
     int left = 0;
