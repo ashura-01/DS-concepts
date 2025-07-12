@@ -11,3 +11,6 @@ def printf(arr):
         print(f"| {val:2d} ", end="")
     print("|")
     print("-----" * n + "-")
+    
+def swap(arr, i, j):
+    arr[i], arr[j] = arr[j], arr[i]
