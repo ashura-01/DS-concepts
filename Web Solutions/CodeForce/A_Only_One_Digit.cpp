@@ -11,38 +11,32 @@ using namespace std;
 const int MOD = 1e9 + 7;
 const int INF = LLONG_MAX;
 
-void solveProblem()
-{
+void solveProblem() {
     // Your problem-solving code here
-    int n;
-    cin >> n;
-    vector<int> arr(n);
+    int x;
+    cin>>x;
 
-    int sum = 0;
-    int maxm = INT_MIN;
-    for (size_t i = 0; i < n; i++)
+    int minm = INT_MAX;
+
+    while(x!=0)
     {
-        cin >> arr[i];
-        sum = sum+arr[i];
-        maxm = max(maxm,arr[i]);
+        int elem = x%10;
+        minm = min(elem, minm);
+        x/=10;
+
     }
 
-    if (sum % 2 == 0 && maxm<=sum/2)
-        yes;
-    else
-        no;
+    cout<<minm<<endl;
 }
 
-int32_t main()
-{
+int32_t main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
     cout.tie(nullptr);
 
     int t = 1;
-    // cin >> t;
-    while (t--)
-    {
+    cin >> t;
+    while (t--) {
         solveProblem();
     }
 
