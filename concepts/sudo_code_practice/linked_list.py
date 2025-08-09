@@ -211,18 +211,42 @@ def printing():
     while curr != None:
         print(curr.data, end=" ")
         curr = curr.next
+    print()
+
+
+def insertionSort():
+    global root
+    sort= node(0)
+    
+    curr = root
+
+    while curr is not None:
+
+        next = curr.next
+        temp = sort
+
+        while temp.next is not None and temp.next.data < curr.data:
+            temp = temp.next
+
+        curr.next = temp.next
+        temp.next = curr
+        curr = next
+
+    root = sort.next
+
 
 
 if __name__ == "__main__":
-    insertFirst(50)
-    insertFirst(40)
-    insertFirst(30)
-    insertFirst(20)
     insertFirst(10)
-    insertFirst(0)
+    insertFirst(20)
+    insertFirst(30)
+    insertFirst(40)
+    insertFirst(50)
+    insertFirst(60)
 
     # insertByPositionBefore(3,999)
     insertByValueBefore(30, 999)
-    deleteByValue(999)
-
+    # deleteByValue(999)
+    printing()
+    insertionSort()
     printing()
