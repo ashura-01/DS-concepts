@@ -241,6 +241,7 @@ def insertionSort():
     curr = root
 
     while curr is not None:
+        
         next = curr.next
         temp = sort
 
