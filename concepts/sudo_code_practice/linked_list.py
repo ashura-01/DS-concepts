@@ -1,10 +1,10 @@
-from template import *
+from typing import Optional
 
 
 class node:
     def __init__(self, data):
         self.data = data
-        self.next = None
+        self.next: Optional["node"] = None
 
 
 root = None
@@ -35,7 +35,7 @@ def insertlast(value):
     prev.next = temp
 
 
-def insertByPositionBefore(position,value):
+def insertByPositionBefore(position, value):
     global root
 
     if position < 0:
@@ -46,20 +46,21 @@ def insertByPositionBefore(position,value):
         insertFirst(value)
         return
     temp = node(value)
-    curr=root
+    curr = root
 
     i = 0
 
-    while i<position-1 and curr != None:
-        curr= curr.next
-        i+=1
-    
+    while i < position - 1 and curr != None:
+        curr = curr.next
+        i += 1
+
     if curr is None:
         print("size out of bound")
         return
 
     temp.next = curr.next
     curr.next = temp
+
 
 def insertByPositionAfter(position, value):
     global root
@@ -70,24 +71,137 @@ def insertByPositionAfter(position, value):
     if position == 0:
         insertFirst(value)
         return
-    
+
     temp = node(value)
     curr = root
 
-    i=0
+    i = 0
 
-    while i<position and curr is not None:
-        curr=curr.next
-        i+=1
-    
-    if curr is None :
+    while i < position and curr is not None:
+        curr = curr.next
+        i += 1
+
+    if curr is None:
         print("out of bound")
         return
-    
+
     temp.next = curr.next
-    curr.next=temp
+    curr.next = temp
 
 
+def insertByValueAfter(target, value):
+    global root
+    temp = node(value)
+
+    curr = root
+
+    while curr is not None and curr.data != target:
+        curr = curr.next
+
+    if curr is None:
+        print("not found")
+        return
+
+    temp.next = curr.next
+    curr.next = temp
+
+
+def insertByValueBefore(target, value):
+    global root
+    temp = node(value)
+
+    curr = root
+
+    while curr is not None and curr.next.data != target:
+        curr = curr.next
+
+    if curr is None:
+        print("not found")
+        return
+
+    temp.next = curr.next
+    curr.next = temp
+
+
+def deleteFirst():
+    global root
+    if root is not None:
+        root = root.next
+
+
+def deleteLast():
+    global root
+
+    if root is None:
+        return
+    if root.next is None:
+        root = None
+        return
+
+    curr = root
+
+    while curr.next.next is not None:
+        curr = curr.next
+
+    curr.next = None
+
+
+def deleteByPosition(position):
+    global root
+
+    if position < 0:
+        return
+    if position == 0:
+        deleteFirst()
+        return
+
+    curr = root
+
+    i = 0
+    while i != position - 1 and curr is not None:
+        curr = curr.next
+        i += 1
+
+    if curr == None or curr.next is None:
+        print("position out of bound")
+        return
+
+    curr.next = curr.next.next
+
+
+def deleteByValue(target):
+    global root
+
+    if root is None:
+        print("List is empty")
+        return
+
+    if root.data == target:
+        root = root.next
+        return
+
+    prev = searchValueReturnAddressOfPrev(target)
+    if prev is None:
+        print("Value not found")
+        return
+
+    curr = prev.next
+    prev.next = curr.next
+
+
+def searchValueReturnAddressOfPrev(target):
+    global root
+
+    prev = root
+    curr = root.next
+
+    while curr is not None:
+        if curr.data == target:
+            return prev
+        prev = curr
+        curr = curr.next
+
+    return None
 
 
 def printing():
@@ -108,6 +222,7 @@ if __name__ == "__main__":
     insertFirst(0)
 
     # insertByPositionBefore(3,999)
-    insertByPositionAfter(3,999)
+    insertByValueBefore(30, 999)
+    deleteByValue(999)
 
     printing()

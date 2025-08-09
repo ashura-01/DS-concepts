@@ -37,22 +37,25 @@ void print(const vector<int> &arr)
 int partition(vector<int> &arr, int low, int high)
 {
     int pivot = arr[low];
-    int findBig = low;
-    int findSmall = high;
+    int left = low;
+    int right = high;
 
-    while (findBig < findSmall)
+    while (left < right)
     {
-        while (arr[findBig] <= pivot && findBig < high)
-            findBig++;
-        while (arr[findSmall] > pivot)
-            findSmall--;
-        if (findBig < findSmall)
-            swap(arr[findBig], arr[findSmall]);
+        while (arr[left] <= pivot && left < high)
+            left++;
+
+        while (arr[right] > pivot)
+            right--;
+            
+        if (left < right)
+            swap(arr[left], arr[right]);
     }
 
-    swap(arr[low], arr[findSmall]);
-    return findSmall;
+    swap(arr[low], arr[right]);
+    return right;
 }
+
 
 void quickSort(vector<int> &arr, int low, int high)
 {
