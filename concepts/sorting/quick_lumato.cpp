@@ -34,42 +34,23 @@ void print(const vector<int> &arr)
     cout << "-\n";
 }
 
-int medianOfThree(vector<int> &arr, int low, int high)
-{
-    int mid = low + (high - low) / 2;
-
-    if (arr[low] > arr[mid])
-        swap(arr[low], arr[mid]);
-    if (arr[low] > arr[high])
-        swap(arr[low], arr[high]);
-    if (arr[mid] > arr[high])
-        swap(arr[mid], arr[high]);
-
-    swap(arr[mid], arr[high]); // pivot moved to end
-    return arr[high];
-}
-
-// Lomuto partition with while loop
 int partition(vector<int> &arr, int low, int high)
 {
-    int pivot = medianOfThree(arr, low, high);
-    int i = low - 1;
-    int j = low;
+    int pivot = arr[high];
 
-    while (j < high)
+    int i = low - 1;
+
+    for (int j = low; j < high; j++)
     {
         if (arr[j] < pivot)
         {
             i++;
             swap(arr[i], arr[j]);
         }
-        j++;
     }
     swap(arr[i + 1], arr[high]);
     return i + 1;
 }
-
-// QuickSort
 void quickSort(vector<int> &arr, int low, int high)
 {
     if (low < high)
@@ -79,7 +60,6 @@ void quickSort(vector<int> &arr, int low, int high)
         quickSort(arr, p + 1, high);
     }
 }
-
 int32_t main()
 {
     ios::sync_with_stdio(false);
