@@ -261,6 +261,22 @@ void reversePrint(node *curr)
     cout<<curr->data<<" ";
 }
 
+void reverse()
+{
+    node *prev = nullptr;
+    node *curr = root;
+    node *next = nullptr;
+
+    while(curr!=nullptr)
+    {
+        next = curr->next;
+
+        curr->next = prev;
+        prev = curr;
+        curr= next;
+    }
+}
+
 int main()
 {
     insertLast(10);

@@ -214,14 +214,33 @@ def printing():
     print()
 
 
+# def insertionSort():
+#     global root
+#     sort= node(0)
+
+#     curr = root
+
+#     while curr is not None:
+
+#         next = curr.next
+#         temp = sort
+
+#         while temp.next is not None and temp.next.data < curr.data:
+#             temp = temp.next
+
+#         curr.next = temp.next
+#         temp.next = curr
+#         curr = next
+
+#     root = sort.next
+
+
 def insertionSort():
     global root
-    sort= node(0)
-    
+    sort = node(0)
     curr = root
 
     while curr is not None:
-
         next = curr.next
         temp = sort
 
@@ -234,6 +253,35 @@ def insertionSort():
 
     root = sort.next
 
+
+def selectionSort():
+    global root
+    i = root
+
+    while i is not None:
+        minm = i
+
+        j = i.next
+
+        while j is not None:
+
+            if j.data < minm.data:
+                minm = j
+                i = i.next
+
+        i.data, minm.data = minm.data, i.data
+
+        i = i.next
+
+
+def selectionSort2():
+    global root
+    for i in root:
+        minm = i
+        for j in i.next:
+            if j.data < minm.data:
+                minm = j
+        i.data, minm.data = minm.data, i.data
 
 
 if __name__ == "__main__":

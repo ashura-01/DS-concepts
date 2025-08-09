@@ -55,15 +55,15 @@ void insertionSort()
     if (!root || !root->next)
         return;
 
-    node* sorted = new node(0);
+    node *sorted = new node(0);
 
-    node* current = root;
+    node *current = root;
 
     while (current != nullptr)
     {
-        node* next = current->next;
+        node *next = current->next;
 
-        node* temp = sorted;
+        node *temp = sorted;
 
         while (temp->next != nullptr && temp->next->data < current->data)
         {
@@ -104,6 +104,22 @@ void insertionSortData()
     }
 }
 
+void reverse()
+{
+    node *prev = nullptr;
+    node *curr = root;
+    node *next = nullptr;
+
+    while (curr != nullptr)
+    {
+        next = curr->next;
+        curr->next = prev;
+        prev = curr;
+        curr = next;
+    }
+
+    root = prev;
+}
 
 int main()
 {
@@ -117,6 +133,8 @@ int main()
 
     printing();
     insertionSortData();
+    printing();
+    reverse();
     printing();
 
     return 0;
