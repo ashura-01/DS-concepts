@@ -67,15 +67,11 @@ void input()
     }
 }
 
-void reverseSegment(node *start, int k)
+node* reverseSegment(node *head, int k)
 {
     node *prev = nullptr;
-    node *curr = start;
+    node *curr = head;
     node *next = nullptr;
-
-    node *before = root;
-    while (before->next != start)
-        before = before->next;
 
     int count = k;
     while (count--)
@@ -86,8 +82,13 @@ void reverseSegment(node *start, int k)
         curr = next;
     }
 
-    before->next = prev;
-    start->next = curr;
+    if (next!=nullptr)
+    {
+        head->next = reverseSegment(next,k);
+    }
+
+    return prev;
+   
 }
 
 int listLen()
@@ -110,20 +111,9 @@ int main()
     insertLast(4);
     insertLast(5);
     insertLast(6);
-    int n = listLen();
+    int k =2;
+    root = reverseSegment(root,k);
     printing();
-    int i = 0;
-    node *curr = root;
-    while(i<n)
-    {
-        if(n%3 == 0)
-        {
-            reverseSegment(curr,3);
-        }
-
-        curr = curr->next;
-    }
-        printing();
 
     return 0;
 }

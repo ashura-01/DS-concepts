@@ -42,30 +42,18 @@ void printing(node *head)
 int main()
 {
 
-    for (int i = 1; i <= 10; i++)
-        insertLast(i);
-
-    int m = 2;
-    int n = 3;
-    vector<int> arr;
-
+    insertLast(1);
+    insertLast(2);
+    insertLast(3);
+    insertLast(4);
+    insertLast(5);
+    insertLast(6);
     node *curr = root;
 
     while (curr)
     {
-
-        for (int i = 0; i < m && curr; i++)
-        {
-            arr.push_back(curr->data);
-            curr = curr->next;
-        }
-
-        for (int i = 0; i < n && curr; i++)
-        {
-            curr = curr->next;
-        }
+        curr = curr->next;
     }
 
-    for (auto x : arr)
-        cout << x << " ";
+    return 0;
 }

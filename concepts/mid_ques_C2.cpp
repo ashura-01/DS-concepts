@@ -14,32 +14,25 @@ struct node
 
 node *root = nullptr;
 
-void insertFirst(int value)
+void insertLast(node *&head, int value)
 {
     node *temp = new node(value);
-    temp->next = root;
-    root = temp;
-}
-
-void insertLast(int value)
-{
-    node *temp = new node(value);
-    if (root == nullptr)
+    if (head == nullptr)
     {
-        root = temp;
+        head = temp;
         return;
     }
 
-    node *curr = root;
+    node *curr = head;
     while (curr->next != nullptr)
     {
         curr = curr->next;
     }
     curr->next = temp;
 }
-void printing()
+void printing(node* head)
 {
-    node *curr = root;
+    node *curr = head;
 
     while (curr != nullptr)
     {
@@ -49,79 +42,41 @@ void printing()
     cout << endl;
 }
 
-void input()
-{
-    while (1)
-    {
-        int data;
-        cin >> data;
 
-        if (data == -1)
-        {
-            break;
-        }
-
-        insertFirst(data);
-    }
-}
-
-void rotate()
-{
-    node *prev = nullptr;
-    node *curr = root;
-
-    while(curr->next)
-    {
-        prev = curr;
-        curr= curr->next;
-    }
-
-    node *head = prev->next;
-    head->next=root;
-    root=head;
-    prev->next=nullptr;
-}
-void rotateB()
-{
-    node *curr = root;
-    node *prev = nullptr;
-    while(curr->next)
-    {
-        prev = curr;
-        curr= curr->next;
-    }
-    node *tail = root;
-    root=root->next;
-    curr->next=tail;
-    tail->next=nullptr;
-}
-int listLen()
-{
-    int count=0;
-    node* curr = root;
-    while (curr)
-    {
-        count++;
-        curr=curr->next;
-    }
-    return count;
-}
 
 int main()
 {
-    input();
-    printing();
-    int k;
-    cin>>k;
-    int n = listLen();
-    int times = abs(n-k);
-    cout<<times<<endl;
-
-    while(times--)
+    node *odd=nullptr;
+    node *even=nullptr;
+    while(1)
     {
-        rotateB();
+        int data;
+        cin>>data;
+
+        if(data ==-1)
+        {
+            break;
+        }
+        if(data%2 == 0)
+        {
+            insertLast(even,data);
+        }
+        else
+        {
+            insertLast(odd,data);
+        }
+        
     }
-    printing();
+    node *curr=even;
+
+    while(curr->next)
+    {
+        curr = curr->next;
+    }
+
+    curr->next = odd;
+    printing(even);
+
 
     return 0;
 }

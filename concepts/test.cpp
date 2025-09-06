@@ -81,6 +81,9 @@ int binarySearch(vector<int> &arr, int target)
     return -1;
 }
 
+void revarr(vector<int> &arr, int k)
+{
+}
 
 int32_t main()
 {
@@ -88,7 +91,7 @@ int32_t main()
     cin.tie(nullptr);
     cout.tie(nullptr);
 
-    vector<int> arr = {19, 18, 16, 17, 9, 9, 7, 8, 0, 1, 2, 3, 15, 14, 12, 11, 10, 9};
+    vector<int> arr = {1,2,3,4,5,6};
 
     print(arr);
     insertionSort(arr);
