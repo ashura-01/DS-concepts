@@ -1,79 +1,53 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-#define int long long
-#define endl '\n'
-#define pb push_back
-#define all(x) (x).begin(), (x).end()
-
-const int MOD = 1e9 + 7;
-const int INF = LLONG_MAX;
-
-void BFS(unordered_map<int, vector<int>> &adj, int vertex, vector<bool> &visited, vector<int> &result)
+vector<int> BFS(int source, vector<vector<int>> &graph, int n)
 {
-    queue<int> que;
-    que.push(vertex);
-    visited[vertex] = true; 
-    result.push_back(vertex);
+    vector<int> level(n, -1); // initialize all levels as -1
+    vector<int> result;       // BFS traversal order
+    queue<int> q;
 
-    while (!que.empty())
+    level[source] = 0; // level of source
+    q.push(source);
+    result.push_back(source);
+
+    while (!q.empty())
     {
-        int current = que.front(); 
-        que.pop();
+        int x = q.front();
+        q.pop(); // remove from queue
 
-        for (int &neighbor : adj[current])
-        {
-            if (!visited[neighbor])
-            {
-                que.push(neighbor);
-                visited[neighbor] = true;
-                result.push_back(neighbor);
+        for (int v : graph[x])
+        { // all adjacent nodes
+            if (level[v] == -1)
+            { // not visited
+                level[v] = level[x] + 1;
+                q.push(v);
+                result.push_back(v);
             }
         }
     }
+
+    return result; // return BFS traversal
 }
 
-vector<int> makingGraphFromInput(vector<vector<int>> graph)
+int main()
 {
-    unordered_map<int, vector<int>> adjlist;
+    int n = 6;
+    vector<vector<int>> graph(n);
 
-    for (int i = 0; i < graph.size(); i++)
-    {
-        for (int j : graph[i])
-        {
-            adjlist[i].push_back(j);
-        }
-    }
+    // Example graph
+    graph[0] = {1, 2};
+    graph[1] = {0, 3, 4};
+    graph[2] = {0, 4};
+    graph[3] = {1, 5};
+    graph[4] = {1, 2, 5};
+    graph[5] = {3, 4};
 
-    vector<int> result;
-    vector<bool> visited(graph.size(), false);
-    BFS(adjlist, 0, visited, result);
+    int source = 0;
+    vector<int> result = BFS(source, graph, n);
 
-    return result;
-}
-
-int32_t main()
-{
-    int V = 5;
-
-    vector<vector<int>> edges = {
-        {2, 3, 1}, // Neighbors of 0
-        {0},       // Neighbors of 1
-        {0, 4},    // Neighbors of 2
-        {0},       // Neighbors of 3
-        {2}        // Neighbors of 4
-    };
-
-    cout << edges.size() << endl;
-
-    vector<int> bfs_result = makingGraphFromInput(edges); 
-
-    cout << "BFS Traversal from vertex 0: "; 
-    for (int node : bfs_result)
-    {
-        cout << node << " ";
-    }
-    cout << endl;
-
-    return 0;
+    cout << "BFS Traversal:\n";
+    for (int v : result)
+        cout << v << " ";
+    cout << "\n";
 }
