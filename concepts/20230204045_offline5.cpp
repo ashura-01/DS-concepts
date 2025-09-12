@@ -1,114 +1,134 @@
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
 using namespace std;
-
-stack<char> stk; 
 
 int priority(char s)
 {
-    if(s=='^')
+    if (s == '^')
         return 100;
-    else if(s=='*'||s=='/')
+    else if (s == '*' || s == '/')
         return 50;
-    else if (s=='+'||s=='-')
+    else if (s == '+' || s == '-')
         return 10;
     else
         return 0;
 }
 
-int evaluate(string str)
+string infixToPostfix(string infix)
 {
-    stack<int> st; 
+    stack<char> stk;
+    string postfix = "";
 
-    for(int i =0; i< str.size(); i++)
+    for (int i = 0; i < infix.size(); i++)
     {
-        int sum=0;
+        char target = infix[i];
+        if (target == ' ')
+            continue;
 
-        if(isdigit(str[i]))
-            st.push(str[i]-'0');
+        if (isdigit(target))
+        {
+            string num = "";
+            while (i < infix.size() && isdigit(infix[i]))
+            {
+                num += infix[i];
+                i++;
+            }
+            i--;
+            postfix += num + ' ';
+        }
 
-        else if(str[i]=='+')
+        else if (target == '(')
+            stk.push(target);
+            
+        else if (target == ')')
         {
-            int a = st.top(); st.pop();
-            int b = st.top(); st.pop();
-            sum=(b+a);
-            st.push(sum);
+            while (!stk.empty() && stk.top() != '(')
+            {
+                postfix += stk.top();
+                postfix += ' ';
+                stk.pop();
+            }
+            if (!stk.empty())
+                stk.pop();
         }
-        else if(str[i]=='-')
+        else
         {
-            int a = st.top(); st.pop();
-            int b = st.top(); st.pop();
-            sum=(b-a);
-            st.push(sum);
+            while (!stk.empty() && priority(stk.top()) >= priority(target))
+            {
+                postfix += stk.top();
+                postfix += ' ';
+                stk.pop();
+            }
+            stk.push(target);
         }
-        else if(str[i]=='*')
+    }
+
+    while (!stk.empty())
+    {
+        postfix += stk.top();
+        postfix += ' ';
+        stk.pop();
+    }
+
+    return postfix;
+}
+
+double numberConverter(const string &postfix, int &i)
+{
+    double num = 0;
+    while (i < postfix.size() && isdigit(postfix[i]))
+    {
+        num = num * 10 + (postfix[i] - '0');
+        i++;
+    }
+    i--;
+    return num;
+}
+
+double evaluate(string postfix)
+{
+    stack<double> st;
+    for (int i = 0; i < postfix.size(); i++)
+    {
+        if (postfix[i] == ' ')
+            continue;
+
+        if (isdigit(postfix[i]))
         {
-            int a = st.top(); st.pop();
-            int b = st.top(); st.pop();
-            sum=(b*a);
-            st.push(sum);
+            st.push(numberConverter(postfix, i));
         }
-        else if(str[i]=='/')
+        else
         {
-            int a = st.top(); st.pop();
-            int b = st.top(); st.pop();
-            sum=(b/a);
-            st.push(sum);
-        }
-        else if(str[i]=='^')
-        {
-            int a = st.top(); st.pop();
-            int b = st.top(); st.pop();
-            sum=pow(b,a);
+            double a = st.top();
+            st.pop();
+            double b = st.top();
+            st.pop();
+            double sum = 0;
+
+            if (postfix[i] == '+')
+                sum = b + a;
+            else if (postfix[i] == '-')
+                sum = b - a;
+            else if (postfix[i] == '*')
+                sum = b * a;
+            else if (postfix[i] == '/')
+                sum = b / a;
+            else if (postfix[i] == '^')
+                sum = pow(b, a);
+
             st.push(sum);
         }
     }
     return st.top();
 }
 
-int main ()
+int main()
 {
-    string infix,postfix="";
-    cin>>infix;
+    string infix;
+    getline(cin, infix);
 
-    for(int i=0; i<infix.size(); i++)
-    {
-        char target=infix[i];
-
-        if(target>='0'&&target<='9')
-        {
-            postfix=postfix+target;
-        }
-        else if(target=='(')
-        {
-            stk.push(target);
-        }
-        else if(target==')')
-        {
-            while(!stk.empty()&&stk.top()!='(')
-            {
-               postfix=postfix+stk.top();
-               stk.pop();
-            }
-            stk.pop();
-        }
-        else
-        {
-            while(!stk.empty() && priority(stk.top()) >= priority(target))
-            {
-                 postfix=postfix+stk.top();
-                 stk.pop();
-            }
-            stk.push(target);
-        }
-    }
-    while(!stk.empty())
-    {
-         postfix=postfix+stk.top();
-         stk.pop();
-    }
-
-    cout<<postfix<<endl;
-    cout<<evaluate(postfix)<<endl;
+    string postfix = infixToPostfix(infix);
+    cout << "Postfix: " << postfix << endl;
+    cout << "Result: " << evaluate(postfix) << endl;
 
     return 0;
 }
