@@ -1,23 +1,29 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-vector<int> BFS(vector<vector<int>> &adj, int start, int n, bool returnLevel = false) {
+vector<int> BFS(vector<vector<int>> &adj, int start, int n, bool returnLevel = false)
+{
     vector<bool> visited(n, false);
-    vector<int> result;       // BFS order
-    vector<int> level(n, -1); // levels initialized as -1
+    vector<int> level(n, -1); 
+    vector<int> result;       
 
     queue<int> que;
     que.push(start);
+
     visited[start] = true;
     result.push_back(start);
+
     level[start] = 0;
 
-    while (!que.empty()) {
+    while (!que.empty())
+    {
         int current = que.front();
         que.pop();
 
-        for (int neighbor : adj[current]) { // iterate over neighbors
-            if (!visited[neighbor]) {
+        for (int neighbor : adj[current])
+        { 
+            if (!visited[neighbor])
+            {
                 que.push(neighbor);
                 visited[neighbor] = true;
                 result.push_back(neighbor);
@@ -26,10 +32,11 @@ vector<int> BFS(vector<vector<int>> &adj, int start, int n, bool returnLevel = f
         }
     }
 
-    return returnLevel ? level : result; // return either levels or BFS order
+    return returnLevel ? level : result; 
 }
 
-int main() {
+int main()
+{
     int n = 6; // number of nodes
     vector<vector<int>> adj(n);
 
@@ -44,13 +51,15 @@ int main() {
     // Get BFS order
     vector<int> bfsOrder = BFS(adj, 0, n, false);
     cout << "BFS Order: ";
-    for (int v : bfsOrder) cout << v << " ";
+    for (int v : bfsOrder)
+        cout << v << " ";
     cout << "\n";
 
     // Get levels
     vector<int> levels = BFS(adj, 0, n, true);
     cout << "Node : Level\n";
-    for (int i = 0; i < n; i++) cout << i << " : " << levels[i] << "\n";
+    for (int i = 0; i < n; i++)
+        cout << i << " : " << levels[i] << "\n";
 
     return 0;
 }
