@@ -1,33 +1,28 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-vector<int> BFS(int source, vector<vector<int>> &graph, int n)
+enum Colors
 {
-    vector<int> level(n, -1);
-    vector<int> result;
-    queue<int> q;
+    WHITE,
+    GRAY,
+    BLACK
+};
 
-    level[source] = 0;
-    q.push(source);
-    result.push_back(source);
+void DFS(int vertex, vector<vector<int>> &graph, vector<Colors> &color, vector<int> &parent, vector<int> &result)
+{
+    color[vertex] = GRAY;
+    result.push_back(vertex);
 
-    while (!q.empty())
+    for (int neighbor : graph[vertex])
     {
-        int x = q.front();
-        q.pop();
-
-        for (int v : graph[x])
+        if (color[neighbor] == WHITE)
         {
-            if (level[v] == -1)
-            {
-                level[v] = level[x] + 1;
-                q.push(v);
-                result.push_back(v);
-            }
+            parent[neighbor] = vertex;
+            DFS(neighbor, graph, color, parent, result);
         }
     }
 
-    return result;
+    color[vertex] = BLACK;
 }
 
 void takeInput(vector<vector<int>> &graph, int &n, int &m, int &source)
@@ -44,7 +39,7 @@ void takeInput(vector<vector<int>> &graph, int &n, int &m, int &source)
 void printGraph(const vector<vector<int>> &graph, int n)
 {
     cout << "Graph (Adjacency List):" << endl;
-    for (int i = 0; i <= n; i++)
+    for (int i = 1; i <= n; i++)
     {
         cout << i << " -> ";
         for (int v : graph[i])
@@ -62,9 +57,13 @@ int main()
     takeInput(graph, n, m, source);
     printGraph(graph, n);
 
-    vector<int> result = BFS(source, graph, n + 1);
+    vector<Colors> color(n + 1, WHITE);
+    vector<int> parent(n + 1, -1);
+    vector<int> result;
 
-    cout << "BFS Traversal:" << endl;
+    DFS(source, graph, color, parent, result);
+
+    cout << "DFS Traversal:" << endl;
     for (int v : result)
         cout << v << " ";
     cout << endl;
