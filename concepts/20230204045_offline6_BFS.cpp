@@ -26,11 +26,10 @@ vector<int> BFS(int source, vector<vector<int>> &graph, int n)
             }
         }
     }
-
     return result;
 }
 
-void takeInput(vector<vector<int>> &graph, int &n, int &m, int &source)
+void takeInput(vector<vector<int>> &graph, int &m)
 {
     for (int i = 0; i < m; i++)
     {
@@ -38,13 +37,12 @@ void takeInput(vector<vector<int>> &graph, int &n, int &m, int &source)
         cin >> u >> v;
         graph[u].push_back(v);
     }
-    cin >> source;
 }
 
 void printGraph(const vector<vector<int>> &graph, int n)
 {
-    cout << "Graph (Adjacency List):" << endl;
-    for (int i = 0; i <= n; i++)
+    cout << "Graph Adjacency List:" << endl;
+    for (int i = 1; i <= n; i++)
     {
         cout << i << " -> ";
         for (int v : graph[i])
@@ -59,8 +57,11 @@ int main()
     cin >> n >> m;
     vector<vector<int>> graph(n + 1);
 
-    takeInput(graph, n, m, source);
+    takeInput(graph, m);
     printGraph(graph, n);
+
+    cout << "input source: ";
+    cin >> source;
 
     vector<int> result = BFS(source, graph, n + 1);
 
