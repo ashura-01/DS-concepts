@@ -3,40 +3,39 @@
 #
 # [1971] Find if Path Exists in Graph
 #
-from typing import List
-from collections import deque
+'''BFS path related problem'''
 # @lc code=start
-class Solution:
-    def bfs(self,n: int, graph: List[List[int]], source: int, destination:int):
+from collections import deque
+from typing import List
 
+
+class Solution:
+    def bfs(self, n:int, source:int, destination:int, graph):
         visited=[False]*n
-        que=deque()
-        que.append(source)
+        que = deque()
+
         visited[source]=True
+        que.append(source)
 
         while que:
 
-            current = que.popleft()
+            current = que.pop()
 
             if current == destination:
                 return True
             
-            for elem in graph[current]:
-                if not visited[elem]:
-                    que.append(elem)
-                    visited[elem]=True
-        
+            for neighbor in graph[current]:
+                if not visited[neighbor]:
+                    visited[neighbor]=True
+                    que.append(neighbor)
         return False
-
-
 
     def validPath(self, n: int, edges: List[List[int]], source: int, destination: int) -> bool:
         graph: List[List[int]] = [[] for _ in range(n)]
         for u, v in edges:
             graph[u].append(v)
             graph[v].append(u)
-
-        return self.bfs(n,graph,source,destination)
+        return self.bfs(n,source,destination,graph)
         
 # @lc code=end
 
