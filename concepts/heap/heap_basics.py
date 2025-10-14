@@ -46,12 +46,7 @@ def heapSort():
         deleteHeap()
 
 
-def main():
-    global heap
+if __name__ == "__main__":
     heap = [0, 50, 30, 40, 10, 60]
     heapSort()
     print("Sorted array:", heap[1:])
-
-
-if __name__ == "__main__":
-    main()
