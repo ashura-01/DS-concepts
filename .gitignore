@@ -2,7 +2,7 @@
 .cph/
 .vev/
 output/
-practice/
+# practice/
 
 # VS Code settings
 .vscode/
