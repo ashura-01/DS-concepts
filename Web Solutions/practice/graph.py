@@ -30,6 +30,23 @@ def bfs(n, source, graph, result):
                 result.append(neighbors)
 
 
+def BFS(n, source, graph, result):
+    visited = [False] * n
+    que = deque()
+
+    visited[source] = True
+    que.append(source)
+    result.append(source)
+
+    while que:
+        current = que.popleft()
+        for neighbor in graph[current]:
+            if not visited[neighbor]:
+                visited[neighbor] = True
+                que.append(neighbor)
+                result.append(neighbor)
+
+
 """bipartite"""
 
 
