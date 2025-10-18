@@ -236,33 +236,36 @@ def allPathPrinting(n: int, source: int, target: int, graph: List[List[int]]):
 
     allpath_dfs(source, target, graph, paths, storage, color)
 
-    for i, path in enumerate(paths, 1):
+    i = 1
+    for path in paths:
         print("path", i, ":", path)
+        i += 1
 
 
 """one path"""
 
 
-def dfs_one_path(source, target, graph, visited, path):
-    visited[source] = True
+def dfs_one_path(source, target, graph, color, path):
+    color[source] = colors.GRAY
     path.append(source)
 
     if source == target:
         return True
 
     for neighbor in graph[source]:
-        if not visited[neighbor]:
-            if dfs_one_path(neighbor, target, graph, visited, path):
+        if color[neighbor] == colors.WHITE:
+            if dfs_one_path(neighbor, target, graph, color, path):
                 return True
 
     path.pop()
+    color[source] = colors.WHITE
     return False
 
 
 def any_path(n, source, target, graph):
-    visited = [False] * n
+    color = [colors.WHITE] * n
     path = []
-    dfs_one_path(source, target, graph, visited, path)
+    dfs_one_path(source, target, graph, color, path)
     return path
 
 
