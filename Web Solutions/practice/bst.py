@@ -200,6 +200,25 @@ def isSameBst(root1: node, root2: node):
     )
 
 
+"""is subtree"""
+
+
+def isSame(s: node, t: node) -> bool:
+    if s is None and t is None:
+        return True
+    if s is None or t is None:
+        return False
+    return s.data == t.data and isSame(s.left, t.left) and isSame(s.right, t.right)
+
+
+def isSubtree(root: node, subRoot: node) -> bool:
+    if root is None:
+        return False
+    if isSame(root, subRoot):
+        return True
+    return isSubtree(root.left, subRoot) or isSubtree(root.right, subRoot)
+
+
 """ Kth smallest element """
 
 
