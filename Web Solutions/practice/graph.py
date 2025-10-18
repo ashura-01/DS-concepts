@@ -3,12 +3,6 @@ from enum import Enum
 from typing import List
 
 
-class colors(Enum):
-    WHITE = 0
-    GRAY = 1
-    BLACK = 2
-
-
 """normal BFS"""
 
 
@@ -110,7 +104,6 @@ def shortest_bfs(n, source, target, graph):
 
     while que:
         current = que.popleft()
-
         if current == target:
             break
         for neighbors in graph[current]:
@@ -118,6 +111,25 @@ def shortest_bfs(n, source, target, graph):
                 visited[neighbors] = True
                 parent[neighbors] = current
                 que.append(neighbors)
+
+    # reconstruct path
+    result = []
+    if not visited[target]:
+        return result  # no path found
+
+    node = target
+    while node != -1:
+        result.append(node)
+        node = parent[node]
+
+    result.reverse()
+    return result
+
+
+class colors(Enum):
+    WHITE = 0
+    GRAY = 1
+    BLACK = 2
 
 
 """normal dfs"""
@@ -202,27 +214,82 @@ def printCycle(n, graph):
 """all path from source to destination"""
 
 
-def allpath_dfs(source, target, graph, result, storage):
-
+def allpath_dfs(source, target, graph, paths, storage, color):
+    color[source] = colors.GRAY
     storage.append(source)
 
     if source == target:
-        result.append(storage[:])
+        paths.append(storage[:])
     else:
-        for neighbors in graph[source]:
-            allpath_dfs(neighbors, target, graph, result, storage)
+        for neighbor in graph[source]:
+            if color[neighbor] == colors.WHITE:
+                allpath_dfs(neighbor, target, graph, paths, storage, color)
+
     storage.pop()
+    color[source] = colors.WHITE
 
 
-def allPathPrinting(n, source, target, graph):
-
-    result = []
+def allPathPrinting(n: int, source: int, target: int, graph: List[List[int]]):
+    color = [colors.WHITE] * n
+    paths = []
     storage = []
-    allpath_dfs(source, target, graph, result, storage)
-    i = 1
-    for numbers in result:
-        print("cycle ", i, ":", numbers)
-        i += 1
+
+    allpath_dfs(source, target, graph, paths, storage, color)
+
+    for i, path in enumerate(paths, 1):
+        print("path", i, ":", path)
+
+
+"""one path"""
+
+
+def dfs_one_path(source, target, graph, visited, path):
+    visited[source] = True
+    path.append(source)
+
+    if source == target:
+        return True
+
+    for neighbor in graph[source]:
+        if not visited[neighbor]:
+            if dfs_one_path(neighbor, target, graph, visited, path):
+                return True
+
+    path.pop()
+    return False
+
+
+def any_path(n, source, target, graph):
+    visited = [False] * n
+    path = []
+    dfs_one_path(source, target, graph, visited, path)
+    return path
+
+
+"""topo logical sort"""
+
+
+def topoDFS(node: int, graph: List[List[int]], color: List[colors], stack: List[int]):
+    color[node] = colors.GRAY
+
+    for neighbor in graph[node]:
+        if color[neighbor] == colors.WHITE:
+            topoDFS(neighbor, graph, color, stack)
+
+    color[node] = colors.BLACK
+    stack.append(node)
+
+
+def topologicalSort(n: int, graph: List[List[int]]) -> List[int]:
+    color = [colors.WHITE] * n
+    stack = []
+
+    for i in range(n):
+        if color[i] == colors.WHITE:
+            topoDFS(i, graph, color, stack)
+
+    stack.reverse()
+    return stack
 
 
 """main function"""
@@ -232,21 +299,34 @@ if __name__ == "__main__":
     graph = [[] for _ in range(n)]
 
     graph[0] = [1, 2]
-    graph[3] = [5]
-    graph[2] = [4]
     graph[1] = [3, 4]
+    graph[2] = [4]
+    graph[3] = [5]
     graph[4] = [2, 5]
     graph[5] = [3]
 
+    print("=== Normal DFS Traversal ===")
     color = [colors.WHITE] * n
     result = []
-
     normalDFS(0, graph, color, result)
+    print("DFS Order:", result)
 
-    print(result)
+    print("\n=== Cycle Detection ===")
     color = [colors.WHITE] * n
-    print(f"the number of cycle {numberOfCycle(n,graph,color)}")
+    print(f"Number of Cycles: {numberOfCycle(n, graph, color)}")
 
+    print("\n=== Printing All Cycles (if any) ===")
     printCycle(n, graph)
 
-    allPathPrinting(n, 0, 4, graph)
+    print("\n=== All Paths from Source → Target ===")
+    source, target = 0, 4
+    allPathPrinting(n, source, target, graph)
+
+    print("\n=== Topological Sort (DFS version) ===")
+    if numberOfCycle(n, graph, [colors.WHITE] * n):
+        print("Graph has a cycle — topological sort not possible.")
+    else:
+        print("Topological Order:", topologicalSort(n, graph))
+
+    print("\n=== Topological Sort (Kahn’s Algorithm / BFS) ===")
+    print("Topological Order:", toposort(n, graph))
