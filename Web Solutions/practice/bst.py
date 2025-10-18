@@ -41,6 +41,9 @@ def findMin(node: node):
     return node
 
 
+"""successor"""
+
+
 def successor(target: node):
     global root
 
@@ -61,6 +64,9 @@ def successor(target: node):
         else:
             break
     return succ
+
+
+"""predecessor"""
 
 
 def findMax(node: node):
@@ -90,6 +96,9 @@ def predecessor(target: node):
     return pred
 
 
+"""insert"""
+
+
 def insert(nodes: node, value):
     if nodes is None:
         return node(value)
@@ -98,6 +107,9 @@ def insert(nodes: node, value):
     else:
         nodes.right = insert(nodes.right, value)
     return nodes
+
+
+"""deleting"""
 
 
 def delete(target: int):
@@ -155,6 +167,9 @@ def delete(target: int):
             prev.right = succ.right
 
 
+"""searching"""
+
+
 def search(target: int):
     global root
 
@@ -170,6 +185,45 @@ def search(target: int):
     return None
 
 
+""" same bst verification"""
+
+
+def isSameBst(root1: node, root2: node):
+    if root1 is None and root2 is None:
+        return True
+    if root1 is None or root2 is None:
+        return False
+    return (
+        (root1.data == root2.data)
+        and isSameBst(root1.left, root2.left)
+        and isSameBst(root1.right, root2.right)
+    )
+
+
+""" Kth smallest element """
+
+
+def inorder(curr: node, k: list, stack: list):
+    if curr is None or k[0] == 0:
+        return
+
+    inorder(curr.left, k, stack)
+
+    k[0] -= 1
+    if k[0] == 0:
+        stack.append(curr.data)
+        return
+
+    inorder(curr.right, k, stack)
+
+
+def kthSmallest(root: node, k: int) -> int:
+    stack = []
+    inorder(root, [k], stack)
+    return stack[-1] if stack else None
+
+
+"""main function"""
 if __name__ == "__main__":
 
     arr = [12, 6, 9, 18, 4, 10, 5, 16, 49, 31, 43]
